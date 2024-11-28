@@ -1,0 +1,65 @@
+<div class="d-flex vh-100 m-0 p-0 mt-5 overflow-hidden" style="width: 100%;">
+  <!-- Left side - Large Image -->
+  <div class="flex-grow-1 d-none d-md-block overflow-hidden" style="width: 37%;">
+    <img src="../../../assets/login-image.jpg" alt="main-image" class="img-fluid pt-3" style="width: 80%;height: 90%; object-fit: cover;">
+  </div>
+
+  <!-- Right side - Login Card -->
+  <div class="d-flex justify-content-center align-items-center flex-column pt-4" style="width: 500px;flex: 1;">
+    <div class="p-4 shadow-none" style="width: 100%; height: 100%; border: none; border-radius: 0;">
+      <div class="card-body pt-5">
+        <h3 class="card-title text-center mb-4">Login</h3>
+
+        <!-- Form starts here -->
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div class="mb-1">
+            <label for="userType" class="form-label">Select User Type</label>
+            <select id="userType" formControlName="userType" class="form-select mb-4">
+              <option value="CUSTOMER">Customer</option>
+              <option value="VENDOR">Vendor</option>
+            </select>
+          </div>
+          
+          <div class="mb-1">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email" placeholder="Enter your email">
+            </mat-form-field>
+
+            <small class="text-danger" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-danger d-block mb-4"
+            style="margin-top: -19px !important;">
+              <span *ngIf="loginForm.get('email')?.hasError('required')">*Email is required.</span>
+              <span *ngIf="loginForm.get('email')?.hasError('email')">*Enter a valid email.</span>
+            </small>
+          </div>
+          
+          <div class="mb-4">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Password</mat-label>
+              <input matInput [type]="passwordVisible ? 'text' : 'password'" formControlName="password" placeholder="Enter your password">
+              <button type="button" mat-icon-button (click)="togglePasswordVisibility()" class="position-absolute" style="right: 10px; top: 10px;">
+                <mat-icon>{{ passwordVisible ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+            </mat-form-field>
+
+            <small
+              class="text-danger d-block"
+              style="margin-top: -19px !important;"
+              *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+              <span *ngIf="loginForm.get('password')?.hasError('required')">*Password is required.</span>
+              <span *ngIf="loginForm.get('password')?.hasError('minlength')">*Password must be at least 6 characters.</span>
+            </small>
+          </div>
+          
+          <button type="submit" class="btn btn-primary w-100" [disabled]="loginForm.invalid">Login</button>
+          
+          <div class="text-center mb-0 mt-3">or</div>
+          <hr class="mt-0" />
+          <p>Don't have an account ?<a routerLink="/register"> Sign up</a></p>
+        </form>
+        
+        
+      </div>
+    </div>
+  </div>
+</div>

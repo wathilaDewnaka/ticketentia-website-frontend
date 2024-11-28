@@ -1,0 +1,74 @@
+<section class="py-5">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="row gx-4 gx-lg-5 align-items-center">
+      <div class="col-md-6">
+        <div class="preview-pic tab-content">
+          <div class="tab-pane active" id="pic-1">
+            <img 
+              [src]="'data:image/jpeg;base64,' + event.returnedImage" 
+              class="card-img-top mb-5 mb-md-0 shadow-lg rounded"
+              alt="{{ event.eventName }}"
+              *ngIf="event.returnedImage"
+            >
+
+            <img 
+              src="../../../../assets/default-event.png" 
+              class="card-img-top mb-5 mb-md-0 shadow-lg rounded"
+              alt="{{ event.eventName }}"
+              *ngIf="!event.returnedImage"
+            >
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="small mb-2 text-muted">{{ event.eventCategory }}</div>
+        <h1 class="display-4 fw-bold text-dark mb-3">{{ event.eventName }}</h1>
+        <div class="fs-5 mb-2 text-primary">
+          <span>Total Price: Rs. {{ totalPrice || event.ticketPrice }}</span>
+        </div>
+        
+        <div class="mb-3 text-muted">
+          <i class="bi bi-alarm"></i> {{ event.eventDate }} | {{ event.eventTime }}<br/>
+          <i class="bi bi-geo-alt"></i> {{ event.eventVenue }}<br/>
+          <i class="bi bi-bookmarks"></i> {{ event.eventCategory }}<br/>
+        </div>
+        
+        <p class="lead mt-4 text-muted">{{ event.eventDescription }}</p>
+
+        <!-- Tickets Availability Info -->
+        <div class="mb-4 d-flex gap-2 align-items-center">
+          <span class="text-muted">Tickets Available: </span>
+          <span [class]="stock < 25 ? 'badge bg-danger' : 'badge bg-success'">
+            {{ stock }} Tickets
+          </span>          
+        </div>
+
+        <!-- Purchase Section -->
+        <div>
+          <div class="d-flex align-items-center mb-4">
+            <label for="inputQuantity" class="form-label me-3 mb-0">Quantity</label>
+            <input 
+              class="form-control text-center me-3" 
+              id="inputQuantity" 
+              type="number" 
+              min="1" 
+              [max]="event.stockCount" 
+              [value]="quantity" 
+              (input)="onQuantityChange($event)" 
+              style="max-width: 6rem"
+            >
+            <button class="btn btn-primary flex-shrink-0" (click)="purchaseTickets()" [disabled]="quantity > event.stockCount">
+              <i class="bi-cart-fill me-1"></i>
+              Purchase Tickets
+            </button>
+          </div>
+        </div>
+
+        <!-- Disabled Button Text -->
+        <div *ngIf="quantity > event.stockCount" class="text-danger mt-2">
+          <small>Sorry, we don’t have enough tickets in stock for your selection.</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

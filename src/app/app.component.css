@@ -1,0 +1,120 @@
+.main-nav-bar{
+    background: #f1f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 20px !important;
+    padding: 10px;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    height: 70px;
+    z-index: 1000;
+}
+
+.sign-up-btn{
+    background: #000;
+    color: white;
+}
+
+.sign-in-btn{
+    background: white;
+    color: black;
+    border: solid 2px;
+
+}
+
+.without-sign{
+    display: flex;
+    list-style-type: none;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 0px;
+    padding-right: 10px;
+}
+
+
+ul{
+    display: flex;
+    list-style-type: none;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    margin: 0px;
+}
+
+ul li{
+    align-items: center;
+
+}
+
+ul li a{
+    transition: .5s;
+}
+
+.image-box{
+    margin-top: -50px;
+    width: 40px;
+    height: 40px;
+}
+
+.image-box img{
+    width: 100px;
+    height: 100px;
+}
+
+.search-bar{
+    border-radius: 25px;
+    border: none;
+    padding: 6px;
+    padding-right: 20px !important;
+}
+
+.icon{
+    font-size: 25px;
+}
+
+.account-bar {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    transition: .5s;
+    transition: all 0.5s ease-in-out;
+
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background-color: white;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    min-width: 187px;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1;
+  }
+
+  .dropdown-content a {
+    color: red;
+    text-decoration: none;
+    display: block;
+    padding: 8px 0;
+  }
+
+  .dropdown-content p {
+    margin: 0;
+    color: gray;
+  }
+
+  .dropdown:hover .dropdown-content {
+    display: block;
+    transition: all 0.5s ease-in-out;
+
+  }

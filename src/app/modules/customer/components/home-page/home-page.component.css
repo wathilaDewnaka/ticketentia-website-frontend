@@ -1,0 +1,28 @@
+/* Home CSS */
+.carousel-item img{
+    height: 600px;
+    
+}
+
+.carousel-item{
+    font-size: 50px;
+    font-weight: bolder;
+}
+
+.caption{
+    position: absolute;
+    display: block !important;
+    top: 50%;
+    height: 40px;
+}
+
+.box{
+    background: #f8f8ff;
+    transition: .5s;
+}
+
+.box:hover{
+    transform: translateY(-10px);
+    background: #eeeef7;
+    cursor: pointer;
+}

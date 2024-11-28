@@ -1,0 +1,29 @@
+.card-img-top{
+  width: 100%;
+  height: 240px;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+/* Intro Section Styles */
+#intro {
+  text-align: center;
+  padding: 50px 20px;
+  background-color: #f9f9f9;
+  animation: fadeIn 1s ease-out;
+}
+
+#intro .intro-content {
+  max-width: 800px;
+  margin: 0 auto;
+}

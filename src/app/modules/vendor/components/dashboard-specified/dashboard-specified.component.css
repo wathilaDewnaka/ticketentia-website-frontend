@@ -1,0 +1,55 @@
+.card.corona-gradient-card {
+    background-image: linear-gradient(to left, #d41459, #911a6c);
+    border-radius: 6px;
+  }
+  
+  .card.corona-gradient-card .gradient-corona-img {
+    height: 85px;
+  }
+  
+  @media (max-width: 576px) {
+    .card.corona-gradient-card .gradient-corona-img {
+      height: auto;
+      min-height: 50px;
+      max-height: 85px;
+    }
+  
+    .card.corona-gradient-card .banner-text {
+      font-size: 0.75rem;
+    }
+  }
+  
+  body{
+    overflow-y: hidden;
+  }
+
+  html, body {
+    width: 100%;
+    overflow-x: hidden;  /* Prevent horizontal overflow */
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  
+  .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  
+  .card {
+    width: 100%;
+    overflow: hidden; /* Ensure card content doesn't overflow */
+  }
+  
+  .card-body {
+    padding: 15px;  /* Adjust padding for better control */
+  }
+  
+  p-chart {
+    max-width: 100%; /* Ensure chart fits inside its container */
+    overflow: hidden;
+  }

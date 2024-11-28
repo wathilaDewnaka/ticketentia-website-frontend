@@ -1,0 +1,38 @@
+<section id="intro" style="margin-top: 30px !important;">
+  <div class="intro-content">
+      <h1>Book Tickets with Ticketentia</h1>
+      <p class="text-secondary">
+          Ticketentia is a trusted platform for discovering and purchasing tickets to concerts, sports, theater, and live events. We connect fans with unforgettable experiences, offering a seamless and secure ticketing process from start to finish.
+      </p>
+  </div>
+</section>
+
+
+<div class="container my-5">
+  <input
+      type="text"
+      class="form-control mb-5 w-100 p-2"
+      placeholder="Search events..."
+        
+  />
+  
+  <div class="row">
+    <div class="col-md-3 mb-2" *ngFor="let event of events">
+      <div class="card" style="width: 20rem;">
+        <img [src]="'data:image/jpeg;base64,' + event.returnedImage" class="card-img-top" alt="..." *ngIf="event.returnedImage">
+        <img src="../../../../assets/default-event.png" class="card-img-top shadow-sm" alt="..." *ngIf="!event.returnedImage"> 
+        <div class="card-body">
+          <h5 class="card-title">{{ event.eventName }}</h5>
+          <h6 class="card-text">Rs. {{ event.ticketPrice }}</h6>
+          <p class="card-text">
+            <i class="bi bi-alarm"></i> {{ event.eventDate }} | {{ event.eventTime }}
+            <i class="bi bi-geo-alt"></i> {{ event.eventVenue }}
+            <i class="bi bi-bookmarks"></i> {{ event.eventCategory }}
+          </p>
+          <p class="card-text">{{ event.eventDescription }}</p>
+          <a [routerLink]="'/customer/events/' + event.sessionId" class="btn btn-primary">Buy Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

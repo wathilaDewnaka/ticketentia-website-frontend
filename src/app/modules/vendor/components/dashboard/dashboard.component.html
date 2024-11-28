@@ -1,0 +1,47 @@
+<div class="container my-4" style="min-height: 500px; ">
+    <div class="row" style="margin-top: 100px;">
+      <!-- Event cards -->
+      <div class="col-md-4 mb-4" *ngFor="let event of events">
+        <mat-card class="event-card shadow-sm p-3">
+          <mat-card-header>
+            <div class="d-flex align-items-center justify-content-between w-100">
+              <div>
+                <mat-card-title class="h5 mb-2">{{ event.eventName }}</mat-card-title>
+                <mat-card-subtitle>{{ event.eventDate | date: 'longDate' }}</mat-card-subtitle>
+                <mat-card-subtitle>Time : {{ event.eventTime }}</mat-card-subtitle>
+                <mat-card-subtitle>Venue : {{ event.eventVenue }}</mat-card-subtitle>
+              </div>
+              <div class="active-icon">
+                <mat-icon color="primary">check_circle</mat-icon>
+              </div>
+            </div>
+          </mat-card-header>
+          <mat-card-content class="my-2">
+            <p class="text-muted">{{ event.eventDescription }}</p>
+          </mat-card-content>
+          <mat-card-actions class="d-flex" style="gap: 10px;">
+            <button mat-stroked-button color="primary" (click)="goToEventDashboard(event.sessionId, $event)">
+              Go to Dashboard
+            </button>
+
+            <button class="btn bg-danger text-white fw-bold rounded-pill" (click)="stopSession(event.sessionId)">
+              <i class="bi bi-x"></i> Stop Session
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+  
+      <!-- New Event Button Card -->
+      <div class="col-md-4 mb-4" *ngIf="!isLoading">
+        <a routerLink="new-session">
+          <mat-card class="add-event-card d-flex align-items-center justify-content-center">
+            <div class="text-center">
+              <mat-icon color="primary" style="font-size: 36px; width: 36px; height: 36px;">add</mat-icon>
+              <p class="mt-2 mb-0 font-weight-bold">Add New Event</p>
+            </div>
+          </mat-card>
+        </a>
+      </div>
+    </div>
+  </div>
+  

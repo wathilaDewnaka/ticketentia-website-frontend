@@ -1,0 +1,152 @@
+<div class="my-5 py-3" style="padding: 46px 45px !important;">
+    <!-- Welcome Message Section -->
+    <div class="row mb-4">
+      <div class="col-12" style="line-height: 1.5;">
+          <h3>Hi Wathila, <br/>Welcome to the dashboard of <span class="fw-bolder">{{session.eventName}}</span></h3>
+      </div>
+    </div>
+  
+    <!-- Metrics Cards Section -->
+    <div class="row">
+      <!-- Potential growth -->
+      <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-9">
+                <div class="d-flex align-items-center">
+                  <h3 class="mb-0 p-0">{{ticketPools.totalTickets}}</h3>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="icon icon-box-success">
+                  <span class="mdi mdi-arrow-top-right icon-item"></span>
+                </div>
+              </div>
+            </div>
+            <h6 class="text-muted font-weight-normal mt-1" style="margin-left: 12px !important;">Total Tickets</h6>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Revenue current -->
+      <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-9">
+                <div class="d-flex align-items-center">
+                  <h3 class="mb-0">{{ticketPools.currentTicketsInPool}}</h3>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="icon icon-box-success">
+                  <span class="mdi mdi-arrow-top-right icon-item"></span>
+                </div>
+              </div>
+            </div>
+            <h6 class="text-muted font-weight-normal mt-1" style="margin-left: 12px !important;">Tickets in Pool</h6>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Daily income -->
+      <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-9">
+                <div class="d-flex align-items-center">
+                  <h3 class="mb-0">Rs. {{sales | number:'1.0-2' }}</h3>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="icon icon-box-danger">
+                  <span class="mdi mdi-arrow-bottom-left icon-item"></span>
+                </div>
+              </div>
+            </div>
+            <h6 class="text-muted font-weight-normal mt-1" style="margin-left: 12px !important;">Current Income</h6>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Expense current -->
+      <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-9">
+                <div class="d-flex align-items-center">
+                  <h3 class="mb-0">Rs. {{session.ticketPrice * session.totalTickets | number:'1.0-2' }}</h3>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="icon icon-box-success">
+                  <span class="mdi mdi-arrow-top-right icon-item"></span>
+                </div>
+              </div>
+            </div>
+            <h6 class="text-muted font-weight-normal mt-1" style="margin-left: 12px !important;">Expected Income</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row" style="padding: 0px 45px; overflow-x: hidden;">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Event Details</h4>
+          <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
+            <div>
+              <h6 class="mb-1">Event Details</h6>
+              <p class="text-muted mb-0">{{session.eventName}}</p>
+              <p class="text-muted mb-0">{{session.eventName}}</p>
+              <p class="text-muted mb-0">{{session.eventName}}</p>
+              <p class="text-muted mb-0">{{session.eventName}}</p>
+              <p class="text-muted mb-0">{{session.eventName}}</p>
+            </div>
+          </div>
+          <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row px-4 px-md-3 px-xl-4 rounded mt-3">
+            <div>
+              <h6 class="mb-1">Pre-Config Details</h6>
+              <p class="text-muted mb-0">Total Tickets : {{session.totalTickets}}</p>
+              <p class="text-muted mb-0">Maximum Pool Capacity : {{session.maxTicketCapacity}}</p>
+              <p class="text-muted mb-0">Ticket Release Rate : {{session.ticketReleaseRate}}</p>
+              <p class="text-muted mb-0">Customer Retrieval Rate : {{session.customerRetrievalRate}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="col-md-7">
+      <p-chart type="line" [data]="ticketPoolData" [options]="ticketPoolOptions"></p-chart>
+    </div>
+  </div>
+  
+  <hr class="mt-5 mx-auto" style="width: 94% !important;"/>
+  
+  <div class="row pb-5" style="padding: 0px 45px; overflow-x: hidden;">
+    <div class="col-md-6">
+      <h4 class="my-3">Ticket Analysis</h4>
+      <div class="container mt-5">
+        <div class="row justify-content-center">
+          <p-chart type="pie" [data]="chartData" [options]="chartOptions"></p-chart>
+        </div>
+      </div> 
+    </div>
+  
+    <div class="col-md-6">
+      <div class="container mt-5">
+        <h4 class="my-3">Sales Analysis</h4>
+        <div class="row justify-content-center">
+          <p-chart type="pie" [data]="chartDataSales" [options]="chartOptions"></p-chart>
+        </div>
+      </div>  
+    </div>
+  </div>
+  

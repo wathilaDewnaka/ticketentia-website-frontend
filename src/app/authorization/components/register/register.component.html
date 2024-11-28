@@ -1,0 +1,167 @@
+<div class="d-flex vh-100 m-0 mt-5">
+  <div class="d-flex justify-content-center align-items-center flex-column left-side">
+    <div class="card shadow-none py-5" style="width: 100%; height: 100%; border: none; border-radius: 0;">
+      <div class="card-body" *ngIf="registerScreen">
+        <h3 class="card-title text-center mb-4">Register</h3>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <div class="mb-1">
+            <label for="userType" class="form-label">Select User Type</label>
+            <select id="userType" formControlName="userType" class="form-select mb-4">
+              <option value="CUSTOMER">Customer</option>
+              <option value="VENDOR">Vendor</option>
+            </select>
+          </div>
+
+          <div class="row mb-1">
+            <div class="col-6">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>First Name</mat-label>
+                <input matInput formControlName="firstName" placeholder="Enter your first name">
+              </mat-form-field>
+              
+              <small 
+                class="text-danger d-block mb-4" 
+                *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched"
+                style="margin-top: -19px !important;">
+                <span *ngIf="registerForm.get('firstName')?.hasError('required')">*First name is required.</span>
+                <span *ngIf="registerForm.get('firstName')?.hasError('minlength')">*Enter with at least 5 characters.</span>
+              </small>
+
+              
+            </div>
+            <div class="col-6">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Last Name</mat-label>
+                <input matInput formControlName="lastName" placeholder="Enter your last name">
+              </mat-form-field>
+
+              <small class="text-danger" *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched" class="text-danger d-block mb-4"
+                style="margin-top: -19px !important;">
+                <span *ngIf="registerForm.get('lastName')?.hasError('required')">*Email is required.</span>
+              </small>
+            </div>
+          </div>
+
+          <div class="mb-1">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email" placeholder="Enter your email">
+            </mat-form-field>
+
+            <small class="text-danger" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-danger d-block mb-4"
+            style="margin-top: -19px !important;">
+              <span *ngIf="registerForm.get('email')?.hasError('required')">*Email is required.</span>
+              <span *ngIf="registerForm.get('email')?.hasError('email')">*Enter a valid email.</span>
+            </small>
+          </div>
+
+          <div class="mb-1">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Password</mat-label>
+              <input matInput type="password" formControlName="password" placeholder="Enter your password">
+            </mat-form-field>
+          </div>
+
+          <div class="mb-1">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Confirm Password</mat-label>
+              <input matInput type="password" formControlName="confirmPassword" placeholder="Confirm your password">
+            </mat-form-field>
+
+            <small class="text-danger" *ngIf="registerForm.errors?.['mismatch'] && registerForm.get('confirmPassword')?.touched">
+              *Passwords do not match.
+            </small>                               
+          </div>
+
+          <div class="mb-1">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Address</mat-label>
+              <input matInput formControlName="address" placeholder="Enter your address">
+            </mat-form-field>
+          </div>
+
+          <div class="row mb-1">
+            <div class="col-5">
+              <select id="country" formControlName="country" class="form-select mb-4 h-75">
+                <option value="" disabled selected>Select Country</option>
+                <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
+              </select>
+            </div>
+
+            <div class="col-7">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Telephone</mat-label>
+                <input matInput formControlName="telephone" placeholder="Enter your telephone">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="mb-1">
+            <mat-form-field appearance="outline" class="w-100" *ngIf="registerForm.get('userType')?.value == 'CUSTOMER'">
+              <mat-label>NIC Number</mat-label>
+              <input matInput formControlName="brOrNICNumber" placeholder="Enter your NIC number">
+            </mat-form-field>
+          </div>
+
+          <div class="mb-1">
+            <mat-form-field appearance="outline" class="w-100" *ngIf="registerForm.get('userType')?.value == 'VENDOR'">
+              <mat-label>Business Registration Number</mat-label>
+              <input matInput formControlName="brOrNICNumber" placeholder="Enter your BR number">
+            </mat-form-field>
+          </div>
+
+          <div class="mb-1">
+            <label for="terms" class="form-label">
+              <input type="checkbox" id="terms" formControlName="terms" required />
+              I agree to the <a href="/terms-and-conditions" target="_blank">Terms and Conditions</a>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100" [disabled]="registerForm.invalid">Register</button>
+
+          <div class="text-center mb-0 mt-3">or</div>
+          <hr class="mt-0" />
+          <p>Already have an account? <a href="">Log in</a></p>
+        </form>
+      </div>
+
+
+      <div class="card-body" *ngIf="otpScreen">
+        <h3 class="card-title text-center my-5">OTP Verification</h3>
+        
+        <p class="text-muted text-center mb-4">
+          An OTP code will be sent to your registered email or phone number. Please enter the 6-digit code below to verify your identity.
+          The OTP is sent to <strong>{{ registerForm.get('email')?.value }}</strong>.
+        </p>
+
+        <div class="card-body text-center mt-4">
+            <i class="bx bxs-check-shield display-3 text-primary mb-3"></i>
+            <form (submit)="verifyOTP($event)">
+              <div class="d-flex justify-content-center gap-4 mb-4">
+                <input
+                  *ngFor="let input of otpInputs; let i = index"
+                  type="text"
+                  maxlength="1"
+                  class="form-control text-center"
+                  style="width: 45px; height: 45px; font-size: 20px;"
+                  [id]="'otp' + i"
+                  (input)="onInput($event, i)"
+                  (keydown)="onKeyDown($event, i)"
+                />
+              </div>
+              <button type="submit" class="btn btn-primary btn-block w-100" [disabled]="!isOtpComplete">Verify OTP</button>
+            </form>
+
+            <div class="text-center mb-0 mt-3">or</div>
+            <hr class="mt-0" />
+            <p>Already have an account? <a href="">Log in</a></p>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex-grow-1 overflow-hidden d-none d-lg-block" style="height: 1040px; width: 75%;">
+    <img src="../../../assets/register-image.jpg" alt="main-image" class="img-fluid w-100" style="height: 100%; object-fit: cover;">
+  </div>
+</div>

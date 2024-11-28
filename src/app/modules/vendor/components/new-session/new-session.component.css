@@ -1,0 +1,41 @@
+.container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  mat-card {
+    max-width: 500px;
+    width: 100%;
+    padding: 2rem;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  button {
+    margin-top: 1rem;
+  }
+
+.file-upload-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.file-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px dotted #ccc;
+  border-radius: 4px;
+}
+
+.file-name {
+  margin-top: 8px;
+  color: #555;
+  font-size: 0.875rem;
+}
+
+
