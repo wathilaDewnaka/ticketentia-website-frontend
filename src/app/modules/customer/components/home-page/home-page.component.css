@@ -12,9 +12,34 @@
 .caption{
     position: absolute;
     display: block !important;
-    top: 50%;
+    top: 35%;
     height: 40px;
 }
+
+
+
+@media (max-width: 768px) {
+    .caption{
+        top: 24%;
+        font-size: 34px;
+    }
+
+    .carousel-item img{
+        height: 500px;
+        
+    }
+
+    .desc{
+        padding: 6px 14px !important;
+    }
+
+    .main-box{
+        padding: 6px 14px !important;
+        margin: auto;
+    }
+    
+  }
+  
 
 .box{
     background: #f8f8ff;

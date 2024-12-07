@@ -18,8 +18,8 @@
   
   /* New Event Card Styling */
   .add-event-card {
-    background-color: #e9f7ff;
-    border: 1px dashed #007bff;
+    background-color: #f2f2f2;
+    border: 1px dashed #323030;
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     padding: 1.5rem;
@@ -27,6 +27,17 @@
   
   .add-event-card:hover {
     transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.1);
+    box-shadow: 0 4px 8px rgba(232, 235, 239, 0.1);
+  }
+  
+  .event-description {
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limit to 2 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal; /* Prevent wrapping to a single line */
+    max-height: 3rem; /* Adjust according to line height */
+    line-height: 1.5rem; /* Set the same as your line height */
   }
   

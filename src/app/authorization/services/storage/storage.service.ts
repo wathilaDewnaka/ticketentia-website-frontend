@@ -76,7 +76,7 @@ export class StorageService {
     if (!this.isBrowser() || this.getToken() == null) {
       return false;
     }
-    return this.getUserRole() === "CUSTOMER" || this.getUserRole() === "VIP-CUSTOMER";
+    return this.getUserRole() === "CUSTOMER" || this.getUserRole() === "VIP_CUSTOMER";
   }
 
   static logout(){

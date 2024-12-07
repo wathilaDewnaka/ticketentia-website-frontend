@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { CustomerService } from '../../services/customer.service';
 import { StorageService } from '../../../../authorization/services/storage/storage.service';
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-event-specified',
@@ -44,15 +45,29 @@ export class EventSpecifiedComponent implements OnInit, OnDestroy {
     Loading.hourglass("Loading", {
       svgColor: '#ffffff'
     })
+
+    if (this.quantity > 10){
+      Swal.fire("Error", "Unable to purchase tickets", "error")
+      return
+    }
+
     this.customer.buyTicket({
       quantity: this.quantity,
       sessionId: this.eventId,
       customerId: StorageService.getUserId()
     }).subscribe((res) => {
+      if (StorageService.getUserRole() === "CUSTOMER" && res.userRole === "VIP_CUSTOMER"){
+          StorageService.logout()
+      }
       Loading.remove()
+
+      this.router.navigateByUrl("/customer/home")
+      Swal.fire("Tickets purchased sucessfully", "Tickets will be added to my tickets shortly", "success")
     }, (err) => {
-      console.log(err)
       Loading.remove()
+      
+      this.router.navigateByUrl("/customer/home")
+      Swal.fire("Error", "Unable to purchase tickets", "error")
     })
   }
 
@@ -61,14 +76,18 @@ export class EventSpecifiedComponent implements OnInit, OnDestroy {
       svgColor: '#ffffff'
     })
     if(this.eventId != null){
-      this.customer.getEvent(this.eventId).subscribe(res => this.event = res)
-      this.customer.connect(this.eventId);
-    }
+      this.customer.getEvent(this.eventId).subscribe((res) => {
+        this.event = res
 
-    this.customer.getMessages().subscribe((message) => {
-      this.stock = message.totalTickets + message.currentTicketsInPool;
-      Loading.remove()
-    })
+        if(this.eventId != null){
+          this.customer.connect(this.eventId);
+          this.customer.getMessages().subscribe((message) => {
+            this.stock = message.totalTickets + message.currentTicketsInPool;
+            Loading.remove()
+          })
+        }
+      })
+    }
   }
   
   

@@ -3,6 +3,12 @@
   height: 240px;
 }
 
+.description{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 /* Fade-in Animation */
 @keyframes fadeIn {
   from {

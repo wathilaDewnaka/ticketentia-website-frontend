@@ -16,6 +16,7 @@ import { StorageService } from '../../../../authorization/services/storage/stora
 export class DashboardSpecifiedComponent implements OnInit, OnDestroy {
   session: any;
   chartData: any;
+  vendorName: string = StorageService.getName();
   chartOptions: any;
   chartDataSales: any;
   ticketPoolOptions: any;
@@ -86,32 +87,35 @@ export class DashboardSpecifiedComponent implements OnInit, OnDestroy {
       }
     };
 
-    if (this.eventId != null){
-      // Connect to the WebSocket server
-      this.vendorService.connect(this.eventId);
-
-      // First, fetch the session details and wait for them to load
+    if (this.eventId) {
       this.vendorService.getSession(this.eventId).subscribe((res) => {
         this.session = res;
-
-        // Once session data is loaded, subscribe to incoming messages
-        this.vendorService.getMessages().subscribe((message) => {
-          this.ticketPools = message;
-          console.log(message + " -from ws");
-          console.log(this.ticketPools);
-
-          // Ensure session data is available before calculating sales
-          if (this.session) {
-            this.sales = (message.releaseTicketCount - message.currentTicketsInPool) * this.session.ticketPrice;
-            this.updateChartData(this.ticketPools);
-          } else {
-            console.error('Session data not available!');
-          }
-          
-          Loading.remove();
+        console.log(this.session)
+    
+        if (this.eventId) {
+          // Connect to the WebSocket server
+          this.vendorService.connect(this.eventId);
+      
+          // Once session data is loaded, subscribe to incoming messages
+          this.vendorService.getMessages().subscribe((message) => {
+            this.ticketPools = message;
+      
+            if (this.session) {
+              this.sales = (message.releaseTicketCount - message.currentTicketsInPool) * this.session.ticketPrice;
+              this.updateChartData(this.ticketPools);
+            } else {
+              console.error('Session data not available!');
+            }
+      
+            
         });
-      });      
-    }
+        Loading.remove();
+      }
+    });
+
+    } else {
+      console.error('eventId is null or undefined!');
+    }    
   }
 
   ngOnDestroy(): void {
@@ -127,8 +131,8 @@ export class DashboardSpecifiedComponent implements OnInit, OnDestroy {
       datasets: [
         {
           data: [data.totalTickets, data.currentTicketsInPool],
-          backgroundColor: ['#42A5F5', '#66BB6A', '#FFA726', '#FF7043'],
-          hoverBackgroundColor: ['#64B5F6', '#81C784', '#FFB74D', '#FF8A65']
+          backgroundColor: [ '#FFC20A', '#005A9C'],
+          hoverBackgroundColor: ['#64B5F6', '#81C784']
         }
       ]
     };
@@ -151,9 +155,9 @@ export class DashboardSpecifiedComponent implements OnInit, OnDestroy {
       labels: ["Sold", "Remaining"],
       datasets: [
         {
-          data: [data.totalTickets, data.currentTicketsInPool],
-          backgroundColor: ['#42A5F5', '#66BB6A', '#FFA726', '#FF7043'],
-          hoverBackgroundColor: ['#64B5F6', '#81C784', '#FFB74D', '#FF8A65']
+          data: [this.session.totalTickets - (data.totalTickets + data.currentTicketsInPool), data.totalTickets],
+          backgroundColor: ['#4E79A7', '#F28E2B'],
+          hoverBackgroundColor: ['#64B5F6', '#81C784']
         }
       ]
     };
@@ -162,11 +166,17 @@ export class DashboardSpecifiedComponent implements OnInit, OnDestroy {
 
     if(this.labels.length == 0){
       this.labels.push(new Date(timestamp.getTime() - 30 * 1000).toLocaleTimeString())
-      this.ticketCounts.push(0)
+      this.ticketCounts.push((data.currentTicketsInPool > 10) ? data.currentTicketsInPool - 10 : 0)
     }
+
   
     this.labels.push(timestamp.toLocaleTimeString());
     this.ticketCounts.push(data.currentTicketsInPool);
+  
+
+    console.log(this.labels)
+    console.log(this.ticketCounts)
+    
     this.ticketPoolOptions = {
       animation: false,
       plugins: {

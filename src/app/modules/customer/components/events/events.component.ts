@@ -29,7 +29,7 @@ export class EventsComponent {
     Loading.hourglass("Loading", {
       svgColor: '#ffffff'
     })
-    if (StorageService.getUserRole() == "VIP-CUSTOMER"){
+    if (StorageService.getUserRole() == "VIP_CUSTOMER"){
       this.customer.getVipEvents().subscribe((res) => {
         this.events = res
         Loading.remove()

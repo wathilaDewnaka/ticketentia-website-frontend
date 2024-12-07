@@ -40,22 +40,20 @@ export class NewSessionComponent {
       ticketPrice: ['', [Validators.required, Validators.min(100)]],
       eventDescription: ['', [Validators.required, Validators.minLength(20)]],
       totalTickets: ['', [Validators.required, Validators.min(10)]],
-      ticketReleaseRate: ['', [Validators.required, Validators.min(0), Validators.max(10)]],
-      customerRetrievalRate: ['', [Validators.required, Validators.min(0), Validators.max(10)]],
+      ticketReleaseRate: ['', [Validators.required, Validators.min(1), Validators.max(10)]],
+      customerRetrievalRate: ['', [Validators.required, Validators.min(1), Validators.max(10)]],
       maxTicketCapacity: ['', [Validators.required, Validators.min(5)]]
-    }, { validators: this.maxCapacityValidator() }); 
+    }, { validators: this.maxCapacityValidator}); 
   }
 
-  maxCapacityValidator(): Validators {
-    return (group: FormGroup) => {
-      const totalTickets = group.get('totalTickets')?.value;
-      const maxTicketCapacity = group.get('maxTicketCapacity')?.value;
+  maxCapacityValidator(form: FormGroup): null | { mismatch: true } {
+    const totalTickets = form.get('totalTickets')?.value;
+    const maxTicketCapacity = form.get('maxTicketCapacity')?.value;
 
-      if (totalTickets && maxTicketCapacity && maxTicketCapacity > totalTickets) {
-        return { 'maxCapacityExceeded': true };
-      }
-      return null;
-    };
+    if (totalTickets && maxTicketCapacity && maxTicketCapacity >= totalTickets) {
+      return { mismatch: true };
+    }
+    return null;
   }
 
   onSubmit() {

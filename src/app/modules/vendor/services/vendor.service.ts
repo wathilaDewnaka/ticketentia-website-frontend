@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import * as Stomp from '@stomp/stompjs';
 import { StorageService } from '../../../authorization/services/storage/storage.service';
 
@@ -31,7 +31,7 @@ export class VendorService {
     this.stompClient.onConnect = () => {
       console.log('Connected to STOMP WebSocket');
 
-      // Subscribe to /topic/updates
+      // Subscribe to /topic/updates    
       this.stompClient?.subscribe('/topic/updates/' + sessionId, (message) => {
         this.messageSubject.next(JSON.parse(message.body));
       });
@@ -73,27 +73,31 @@ export class VendorService {
 
   // HTTP requests (for session and other actions)
   configureSession(sessionRequest: any): Observable<any> {
-    return this.http.post(`${BASE_URL}/api/vendor/session/start`, sessionRequest, { headers: this.createAuthorizationHeader() });
+    return (this.checkToken() || sessionRequest) ? this.http.post(`${BASE_URL}/api/vendor/session/start`, sessionRequest, { headers: this.createAuthorizationHeader() }) : of(null);
   }
 
   getSessionsByVendor(vendorId: string): Observable<any> {
-    return this.http.get(`${BASE_URL}/api/vendor/session/all-sessions/${vendorId}`);
+    return (this.checkToken() || vendorId) ? this.http.get(`${BASE_URL}/api/vendor/session/all-sessions/${vendorId}`) : of(null);
   }
 
   getInactiveSessionsByVendor(vendorId: string): Observable<any> {
-    return this.http.get(`${BASE_URL}/api/vendor/session/all-sessions/inactive/${vendorId}`);
+    return (this.checkToken() || vendorId) ? this.http.get(`${BASE_URL}/api/vendor/session/all-sessions/inactive/${vendorId}`) : of(null);
   }
 
   getSession(sessionId: string): Observable<any> {
-    return this.http.get(`${BASE_URL}/api/vendor/session/all-sessions/session/${sessionId}`)
+    return (this.checkToken() || sessionId) ? this.http.get(`${BASE_URL}/api/vendor/session/all-sessions/session/${sessionId}`) : of(null)
   }
 
   stopSession(sessionId: string): Observable<any> {
-    return this.http.get(`${BASE_URL}/api/vendor/session/stop/${sessionId}`)
+    return (this.checkToken() || sessionId) ? this.http.get(`${BASE_URL}/api/vendor/session/stop/${sessionId}`) : of(null)
   }
   
   private createAuthorizationHeader(): HttpHeaders {
     const token = StorageService.getToken();
     return new HttpHeaders({ 'Authorization': 'Bearer ' + token });
+  }
+
+  private checkToken(): boolean {
+    return !!StorageService.getToken(); // Returns true if token exists, otherwise false
   }
 }

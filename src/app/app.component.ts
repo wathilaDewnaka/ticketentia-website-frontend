@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, RouterOutlet, RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterOutlet, RouterLink, RouterModule, RouterLinkActive } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { StorageService } from './authorization/services/storage/storage.service';
@@ -7,7 +7,7 @@ import { StorageService } from './authorization/services/storage/storage.service
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MatIconModule, CommonModule, RouterLink, RouterModule],
+  imports: [RouterOutlet, MatIconModule, CommonModule, RouterLink, RouterModule, RouterLinkActive],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -16,7 +16,7 @@ export class AppComponent {
   title = "frontend"
   isCustomerLoggedIn: boolean = StorageService.isCustomerLoggedIn()
   isVendorLoggedIn: boolean = StorageService.isVendorLoggedIn()
-  customerStatus: string = StorageService.getName()
+  customerStatus: string = StorageService.getUserRole()
   customerName: string = StorageService.getName()
 
   constructor(private router: Router) {

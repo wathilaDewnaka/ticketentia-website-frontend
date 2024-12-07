@@ -1,0 +1,24 @@
+.event-description {
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limit to 2 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal; /* Prevent wrapping to a single line */
+    max-height: 3rem; /* Adjust according to line height */
+    line-height: 1.5rem; /* Set the same as your line height */
+  }
+
+    
+  .event-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Event Card Styling */
+.event-card {
+  background-color: #f9f9f9;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

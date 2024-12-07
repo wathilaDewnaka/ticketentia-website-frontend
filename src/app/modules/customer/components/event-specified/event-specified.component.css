@@ -1,0 +1,6 @@
+.event-description {
+    white-space: normal;  /* Allows text to wrap naturally */
+    overflow: visible;    /* Ensures no text is hidden */
+    word-wrap: break-word; /* Breaks long words to fit in the container */
+    line-height: 1.5;     /* Adjust line spacing for readability */
+  }

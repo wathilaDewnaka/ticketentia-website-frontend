@@ -36,7 +36,7 @@ export class DashboardComponent {
     const userId = StorageService.getUserId();
     this.vendor.getSessionsByVendor(userId).subscribe(
       (res) => {
-        this.events = res;
+        this.events = res
         Loading.remove()
         this.isLoading = false
       }
@@ -58,7 +58,6 @@ export class DashboardComponent {
      })
     this.vendor.stopSession(eventId).subscribe(
       (res) => {
-        console.log(res);
         this.loadSessions();
         Loading.remove(); // Remove loading once data is refreshed
       },

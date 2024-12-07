@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-center align-items-center mt-5">
   <div class="p-4 shadow-lg my-5" style="max-width: 900px; width: 100%;">
-    <h3 class="text-center mb-4">Create Session / Event</h3>
+    <h3 class="text-center mb-2">Create Session / Event</h3>
     <form [formGroup]="eventForm" (ngSubmit)="onSubmit()" class="row">
 
       <div class="col-12 mb-4">
@@ -19,13 +19,13 @@
       </div>
       
       <!-- Left section of the form (Event Details) -->
-      <div class="col-md-6 mb-4">
+      <div class="col-md-6 mb-2">
         <mat-form-field appearance="outline" class="w-100 mb-3">
           <mat-label>Event Name</mat-label>
           <input matInput placeholder="Enter event name" formControlName="eventName" required />
         </mat-form-field>
         <small 
-            class="text-danger d-block mb-4" 
+            class="text-danger d-block mb-2" 
             *ngIf="eventForm.get('eventName')?.invalid && eventForm.get('eventName')?.touched"
             style="margin-top: -35px !important;">
             <span *ngIf="eventForm.get('eventName')?.hasError('required')">*Event name is required.</span>
@@ -37,7 +37,7 @@
           <input matInput placeholder="Enter event venue" formControlName="eventVenue" required />
         </mat-form-field>
         <small 
-            class="text-danger d-block mb-4" 
+            class="text-danger d-block mb-2" 
             *ngIf="eventForm.get('eventVenue')?.invalid && eventForm.get('eventVenue')?.touched"
             style="margin-top: -35px !important;">
             <span *ngIf="eventForm.get('eventVenue')?.hasError('required')">*Event venue is required.</span>
@@ -49,7 +49,7 @@
           <input matInput min="0" placeholder="Enter ticket price" formControlName="ticketPrice" type="number" required />
         </mat-form-field>
         <small 
-            class="text-danger d-block mb-4" 
+            class="text-danger d-block mb-2" 
             *ngIf="eventForm.get('ticketPrice')?.invalid && eventForm.get('ticketPrice')?.touched"
             style="margin-top: -35px !important;">
             <span *ngIf="eventForm.get('ticketPrice')?.hasError('required')">*Ticket price is required.</span>
@@ -68,7 +68,7 @@
           </mat-select>
         </mat-form-field>
         <small 
-            class="text-danger d-block mb-4" 
+            class="text-danger d-block mb-2" 
             *ngIf="eventForm.get('eventCategory')?.invalid && eventForm.get('eventCategory')?.touched"
             style="margin-top: -35px !important;">
             <span *ngIf="eventForm.get('eventCategory')?.hasError('required')">*Event category is required.</span>
@@ -76,12 +76,12 @@
 
         <mat-form-field appearance="outline" class="w-100 mb-3">
           <mat-label>Event Date</mat-label>
-          <input matInput [matDatepicker]="datePicker" placeholder="Select event date" formControlName="eventDate" [min]="minDate"  required />
+          <input matInput readonly [matDatepicker]="datePicker" placeholder="Select event date" formControlName="eventDate" [min]="minDate"  required />
           <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
           <mat-datepicker #datePicker></mat-datepicker>
         </mat-form-field>
         <small 
-            class="text-danger d-block mb-4" 
+            class="text-danger d-block mb-2" 
             *ngIf="eventForm.get('eventDate')?.invalid && eventForm.get('eventDate')?.touched"
             style="margin-top: -35px !important;">
             <span *ngIf="eventForm.get('eventDate')?.hasError('required')">*Event date is required.</span>
@@ -92,10 +92,10 @@
           <input matInput type="time" formControlName="eventTime" required />
         </mat-form-field>
         <small 
-            class="text-danger d-block mb-4" 
-            *ngIf="eventForm.get('time')?.invalid && eventForm.get('time')?.touched"
+            class="text-danger d-block mb-2" 
+            *ngIf="eventForm.get('eventTime')?.invalid && eventForm.get('eventTime')?.touched"
             style="margin-top: -35px !important;">
-            <span *ngIf="eventForm.get('time')?.hasError('required')">*Event category is required.</span>
+            <span *ngIf="eventForm.get('eventTime')?.hasError('required')">*Event category is required.</span>
         </small>
 
         <mat-form-field appearance="outline" class="w-100 mb-3">
@@ -103,21 +103,21 @@
           <textarea matInput placeholder="Enter event description" formControlName="eventDescription" required></textarea>
         </mat-form-field>
         <small 
-            class="text-danger d-block mb-4" 
+            class="text-danger d-block mb-2" 
             *ngIf="eventForm.get('eventDescription')?.invalid && eventForm.get('eventDescription')?.touched"
             style="margin-top: -35px !important;">
             <span *ngIf="eventForm.get('eventDescription')?.hasError('required')">*Event description is required.</span>
-            <span *ngIf="eventForm.get('eventDescription')?.hasError('minLenght')">*Enter at least 20 characters.</span>
+            <span *ngIf="eventForm.get('eventDescription')?.hasError('minlength')">*Enter at least 20 characters.</span>
         </small>
       </div>
 
-      <div class="col-md-6 mb-4">
+      <div class="col-md-6 mb-2">
         <mat-form-field appearance="outline" class="w-100 mb-3">
           <mat-label>Total Tickets</mat-label>
           <input matInput type="number" min="10" placeholder="Enter total tickets" formControlName="totalTickets" required />
         </mat-form-field>
         <small 
-            class="text-danger d-block mb-4" 
+            class="text-danger d-block mb-2" 
             *ngIf="eventForm.get('totalTickets')?.invalid && eventForm.get('totalTickets')?.touched"
             style="margin-top: -35px !important;">
             <span *ngIf="eventForm.get('totalTickets')?.hasError('required')">*Total tickets is required.</span>
@@ -129,11 +129,11 @@
           <input matInput type="number" min="0" max="10" placeholder="Enter ticket release rate (in seconds)" formControlName="ticketReleaseRate" required />
         </mat-form-field>
         <small 
-            class="text-danger d-block mb-4" 
+            class="text-danger d-block mb-2" 
             *ngIf="eventForm.get('ticketReleaseRate')?.invalid && eventForm.get('ticketReleaseRate')?.touched"
             style="margin-top: -35px !important;">
             <span *ngIf="eventForm.get('ticketReleaseRate')?.hasError('required')">*Release rate is required.</span>
-            <span *ngIf="eventForm.get('ticketReleaseRate')?.hasError('min')">*Should be at least 0 seconds.</span>
+            <span *ngIf="eventForm.get('ticketReleaseRate')?.hasError('min')">*Should be at least 1 second.</span>
             <span *ngIf="eventForm.get('ticketReleaseRate')?.hasError('max')">*Maximum 10 seconds allowed.</span>
         </small>
 
@@ -142,34 +142,41 @@
           <input matInput type="number" min="0" max="10" placeholder="Enter customer retrieval rate (in seconds)" formControlName="customerRetrievalRate" required />
         </mat-form-field>
         <small 
-            class="text-danger d-block mb-4" 
+            class="text-danger d-block mb-2" 
             *ngIf="eventForm.get('customerRetrievalRate')?.invalid && eventForm.get('customerRetrievalRate')?.touched"
             style="margin-top: -35px !important;">
             <span *ngIf="eventForm.get('customerRetrievalRate')?.hasError('required')">*Retrieval rate is required.</span>
-            <span *ngIf="eventForm.get('customerRetrievalRate')?.hasError('min')">*Should be at least 0 seconds.</span>
+            <span *ngIf="eventForm.get('customerRetrievalRate')?.hasError('min')">*Should be at least 1 second.</span>
             <span *ngIf="eventForm.get('customerRetrievalRate')?.hasError('max')">*Maximum 10 seconds allowed.</span>
         </small>
 
         <mat-form-field appearance="outline" class="w-100 mb-3">
           <mat-label>Maximum Capacity of Pool</mat-label>
           <input matInput type="number" min="5" placeholder="Enter maximum capacity" formControlName="maxTicketCapacity" required />
-          <mat-error *ngIf="eventForm.errors?.['maxCapacityExceeded']"></mat-error>
         </mat-form-field>
         <small 
-            class="text-danger d-block mb-4" 
+            class="text-danger d-block mb-2" 
             *ngIf="eventForm.get('maxTicketCapacity')?.invalid && eventForm.get('maxTicketCapacity')?.touched"
             style="margin-top: -35px !important;">
             <span *ngIf="eventForm.get('maxTicketCapacity')?.hasError('required')">*Maximum pool capacity is required.</span>
             <span *ngIf="eventForm.get('maxTicketCapacity')?.hasError('min')">*Minimum 5 tickets should be stored at pool.</span>
-            <!-- <span *ngIf="eventForm.get('customerRetrievalRate')?.hasError('max')">*Maximum 10 seconds allowed.</span> -->
         </small>
+        <small 
+            class="text-danger d-block mb-2" 
+            *ngIf="eventForm.hasError('mismatch')"
+            style="margin-top: -35px !important;">
+          <span *ngIf="eventForm.hasError('mismatch')">
+            *Maximum pool capacity should be less than total tickets.
+         </span>
+        </small>
+
 
         <mat-form-field appearance="outline" class="w-100 mb-3">
           <mat-label>VIP Customer Discount (%)</mat-label>
           <input matInput type="number" min="0" placeholder="Enter discount for VIP customers" formControlName="vipDiscount" required />
         </mat-form-field>
         <small 
-            class="text-danger d-block mb-4" 
+            class="text-danger d-block mb-2" 
             *ngIf="eventForm.get('vipDiscount')?.invalid && eventForm.get('vipDiscount')?.touched"
             style="margin-top: -35px !important;">
             <span *ngIf="eventForm.get('vipDiscount')?.hasError('required')">*VIP discount is required.</span>
@@ -185,6 +192,12 @@
             <mat-option value="Regular">Regular</mat-option>
           </mat-select>
         </mat-form-field>
+         <small 
+            class="text-danger d-block mb-2" 
+            *ngIf="eventForm.get('eventType')?.invalid && eventForm.get('eventType')?.touched"
+            style="margin-top: -35px !important;">
+            <span *ngIf="eventForm.get('eventType')?.hasError('required')">*Event type is required.</span>
+          </small>
       </div>
 
       <div class="col-12 text-center">

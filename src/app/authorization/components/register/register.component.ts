@@ -20,9 +20,7 @@ import { log } from 'console';
 
 export class RegisterComponent {
   countries: string[] = [];
-  registerScreen: boolean = true;
-  otpScreen: boolean = false;
-  otpInputsFilled: boolean = false;
+  showPassword: boolean = false;
   registerForm: FormGroup;
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
@@ -36,7 +34,7 @@ export class RegisterComponent {
       userType: ['CUSTOMER', Validators.required],
       firstName: ['', [Validators.required, Validators.minLength(5)]],
       lastName: ['', [Validators.required]], // Wrap multiple validators in an array
-      address: ['', [Validators.required, Validators.minLength(5)]], // Fixed here
+      address: ['', [Validators.required, Validators.minLength(5)]], 
       country: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -57,6 +55,10 @@ export class RegisterComponent {
         this.countries = ["Sri Lanka", "India", "Japan", "Nepal", "America"]
       }
     );
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 
   passwordMatchValidator(form: FormGroup): null | { mismatch: true } {
@@ -88,6 +90,8 @@ export class RegisterComponent {
         )
 
         Loading.remove()
+
+        this.router.navigateByUrl('/login')
       }, err => {
         Loading.remove()
         document.body.style.overflow = ''
@@ -98,55 +102,5 @@ export class RegisterComponent {
         )
       })
     }
-  }
-
-  otpInputs = Array(6).fill('');
-
-  onInput(event: Event, index: number) {
-    const input = event.target as HTMLInputElement;
-
-    // Allow only numeric input
-    if (!/^\d$/.test(input.value)) {
-      input.value = '';
-      return;
-    }
-
-    // Move to the next input field if not the last
-    if (input.value && index < this.otpInputs.length - 1) {
-      const nextInput = document.getElementById(`otp${index + 1}`) as HTMLInputElement;
-      nextInput?.focus();
-    }
-  }
-
-  onKeyDown(event: KeyboardEvent, index: number) {
-    const input = event.target as HTMLInputElement;
-
-    // Handle backspace key to move to the previous input
-    if (event.key === 'Backspace' && !input.value && index > 0) {
-      const prevInput = document.getElementById(`otp${index - 1}`) as HTMLInputElement;
-      prevInput?.focus();
-    }
-  }
-
-  verifyOTP(event: Event) {
-    event.preventDefault();
-
-    const otp = this.otpInputs
-      .map((_, index) => {
-        const input = document.getElementById(`otp${index}`) as HTMLInputElement;
-        return input?.value || '';
-      })
-      .join('');
-
-    console.log('Entered OTP:', otp);
-    // Add your verification logic here
-  }
-
-  isOtpComplete(): boolean {
-    return this.otpInputs.every((_, index) => {
-      const input = document.getElementById(`otp${index}`) as HTMLInputElement;
-      console.log(input?.value)
-      return input?.value.trim().length > 0;
-    });
   }
 }

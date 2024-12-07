@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 })
 export class BookingHistoryComponent {
   tickets:any = [];
+  isLoading: boolean = false;
 
   constructor(private customer: CustomerService, private router: Router) {
     if (!StorageService.isCustomerLoggedIn()){
@@ -25,10 +26,11 @@ export class BookingHistoryComponent {
       svgColor: '#ffffff'
       })
     
+    this.isLoading = true
     document.body.style.overflow = 'hidden'
     this.customer.getHistory(StorageService.getUserId()).subscribe((res) => {
       this.tickets = res;
-      console.log(res)
+      this.isLoading = false
       document.body.style.overflow = ''
       Loading.remove()
     })

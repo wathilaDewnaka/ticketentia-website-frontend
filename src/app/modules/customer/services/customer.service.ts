@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as Stomp from '@stomp/stompjs';
-import { Observable, Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
+import { StorageService } from '../../../authorization/services/storage/storage.service';
 
 const BASE_URL = ['http://localhost:8080']
-
 
 @Injectable({
   providedIn: 'root'
@@ -25,15 +25,15 @@ export class CustomerService {
   }
 
   getEvent(sessionId : String): Observable<any>{
-    return this.http.get(BASE_URL + "/api/customer/events/" + sessionId)
+    return (this.checkToken() || sessionId) ? this.http.get(BASE_URL + "/api/customer/events/" + sessionId) : of(null)
   }
 
   getHistory(customerId: String): Observable<any>{
-    return this.http.get(BASE_URL + "/api/customer/history/" + customerId)
+    return (this.checkToken() || customerId) ? this.http.get(BASE_URL + "/api/customer/history/" + customerId) : of(null)
   }
 
   buyTicket(purchasingDetails: any): Observable<any>{
-    return this.http.post(BASE_URL + "/api/customer/events/purchase-ticket", purchasingDetails)
+    return (this.checkToken() || purchasingDetails) ? this.http.post(BASE_URL + "/api/customer/events/purchase-ticket", purchasingDetails) : of(null)
   }
 
   connect(sessionId : string): void {
@@ -58,7 +58,7 @@ export class CustomerService {
       });
 
       // Send an initial message if needed
-      this.sendMessage({ sessionId: 1 });
+      this.sendMessage({ sessionId: sessionId });
     };
 
     this.stompClient.onStompError = (frame) => {
@@ -90,5 +90,9 @@ export class CustomerService {
     if (this.stompClient) {
       this.stompClient.deactivate();
     }
+  }
+
+  private checkToken(): boolean {
+    return !!StorageService.getToken(); // Returns true if token exists, otherwise false
   }
 }

@@ -28,12 +28,12 @@
         </div>
         
         <div class="mb-3 text-muted">
-          <i class="bi bi-alarm"></i> {{ event.eventDate }} | {{ event.eventTime }}<br/>
+          <i class="bi bi-alarm"></i> {{ event.eventDate  | date: 'yyyy-MM-dd' }} | {{ event.eventTime | date: 'hh:mm a' }}<br/>
           <i class="bi bi-geo-alt"></i> {{ event.eventVenue }}<br/>
           <i class="bi bi-bookmarks"></i> {{ event.eventCategory }}<br/>
         </div>
         
-        <p class="lead mt-4 text-muted">{{ event.eventDescription }}</p>
+        <p class="lead mt-4 text-muted w-100 event-description">{{ event.eventDescription }}</p>
 
         <!-- Tickets Availability Info -->
         <div class="mb-4 d-flex gap-2 align-items-center">
@@ -52,12 +52,12 @@
               id="inputQuantity" 
               type="number" 
               min="1" 
-              [max]="event.stockCount" 
+              [max]="event.stockCount || 10" 
               [value]="quantity" 
               (input)="onQuantityChange($event)" 
               style="max-width: 6rem"
             >
-            <button class="btn btn-primary flex-shrink-0" (click)="purchaseTickets()" [disabled]="quantity > event.stockCount">
+            <button class="btn bg-dark text-white flex-shrink-0" (click)="purchaseTickets()" [disabled]="quantity > event.stockCount || quantity > 10">
               <i class="bi-cart-fill me-1"></i>
               Purchase Tickets
             </button>

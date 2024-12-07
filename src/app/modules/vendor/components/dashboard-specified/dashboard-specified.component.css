@@ -53,3 +53,13 @@
     max-width: 100%; /* Ensure chart fits inside its container */
     overflow: hidden;
   }
+
+  .main{
+    padding: 46px 45px;
+  }
+
+  @media only screen and (max-width: 767px) {
+    .main{
+      padding: 42px 12px !important;
+    }
+  }

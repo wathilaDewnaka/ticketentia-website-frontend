@@ -1,5 +1,9 @@
 <div class="container my-4" style="min-height: 500px; ">
-  <div class="row" style="margin-top: 100px;">
+  <div class="row" style="margin-top: 100px;" *ngIf="events.length === 0 && !isLoading">
+    <h4 class="text-muted text-center">No past sessions for this vendor.</h4>
+  </div>
+
+  <div class="row" style="margin-top: 100px;" *ngIf="events.length > 0">
     <!-- Event cards -->
     <div class="col-md-4 mb-4" *ngFor="let event of events">
       <mat-card class="event-card shadow-sm p-3">
@@ -12,12 +16,12 @@
               <mat-card-subtitle>Venue : {{ event.eventVenue }}</mat-card-subtitle>
             </div>
             <div class="active-icon">
-              <mat-icon color="primary">check_circle</mat-icon>
+              <i class="bi bi-x-circle-fill" style="color: red; font-size:x-large ;"></i>
             </div>
           </div>
         </mat-card-header>
-        <mat-card-content class="my-2">
-          <p class="text-muted">{{ event.eventDescription }}</p>
+        <mat-card-content class="my-2 w-full">
+          <p class="text-muted event-description">{{ event.eventDescription }}</p>
         </mat-card-content>
         <mat-card-actions class="d-flex" style="gap: 10px;">
           <button mat-stroked-button color="primary" (click)="goToEventDashboard(event.sessionId)">

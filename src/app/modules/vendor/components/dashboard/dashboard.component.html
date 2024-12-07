@@ -16,8 +16,8 @@
               </div>
             </div>
           </mat-card-header>
-          <mat-card-content class="my-2">
-            <p class="text-muted">{{ event.eventDescription }}</p>
+          <mat-card-content class="my-2 w-full">
+            <p class="text-muted event-description">{{ event.eventDescription }}</p>
           </mat-card-content>
           <mat-card-actions class="d-flex" style="gap: 10px;">
             <button mat-stroked-button color="primary" (click)="goToEventDashboard(event.sessionId, $event)">
@@ -31,13 +31,12 @@
         </mat-card>
       </div>
   
-      <!-- New Event Button Card -->
       <div class="col-md-4 mb-4" *ngIf="!isLoading">
         <a routerLink="new-session">
           <mat-card class="add-event-card d-flex align-items-center justify-content-center">
             <div class="text-center">
-              <mat-icon color="primary" style="font-size: 36px; width: 36px; height: 36px;">add</mat-icon>
-              <p class="mt-2 mb-0 font-weight-bold">Add New Event</p>
+              <mat-icon color="dark" style="font-size: 36px; width: 36px; height: 36px; color: #000;">add</mat-icon>
+              <p class="mt-2 mb-0 font-weight-bold text-dark">Add New Event</p>
             </div>
           </mat-card>
         </a>

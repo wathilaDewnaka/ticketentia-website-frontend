@@ -15,19 +15,22 @@ import { Router } from '@angular/router';
 })
 export class SessionHistoryComponent{
   events: any = []
+  isLoading: boolean = false;
 
   constructor(private vendor: VendorService, private router: Router) {
     if (!StorageService.isVendorLoggedIn()){
       this.router.navigateByUrl("/")
     }
 
+    this.isLoading = true
     this.vendor.getInactiveSessionsByVendor(StorageService.getUserId()).subscribe((res) => {
       this.events = res;
+      this.isLoading = false
     })
   }
 
   goToEventDashboard(eventId: string) {
     console.log(eventId)
-    this.router.navigate([`vendor/sessions/dashboard/`, eventId]);
+    this.router.navigate([`vendor/sessions-history/dashboard/`, eventId]);
   }
 }

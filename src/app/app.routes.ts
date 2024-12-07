@@ -24,6 +24,7 @@ export const routes: Routes = [
   { path: "vendor/sessions/new-session", component: NewSessionComponent },
   { path: "vendor/about", component: AboutUsVendorComponent },
   { path: "vendor/sessions-history", component: SessionHistoryComponent },
+  { path: "vendor/sessions-history/dashboard/:id", component: DashboardSpecifiedComponent },
 
   { path: "customer/home", component: HomePageComponent },
   { path: "customer/events", component: EventsComponent },

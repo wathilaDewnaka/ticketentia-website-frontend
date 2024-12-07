@@ -1,13 +1,13 @@
-<div class="my-5 py-3" style="padding: 46px 45px !important;">
+<div class="my-5 main">
     <!-- Welcome Message Section -->
-    <div class="row mb-4">
+    <div class="row mb-4 mt-4">
       <div class="col-12" style="line-height: 1.5;">
-          <h3>Hi Wathila, <br/>Welcome to the dashboard of <span class="fw-bolder">{{session.eventName}}</span></h3>
+          <h3>Hi {{vendorName}}, <br/>Welcome to the dashboard of <span class="fw-bolder">{{session.eventName}}</span></h3>
       </div>
     </div>
   
     <!-- Metrics Cards Section -->
-    <div class="row">
+    <div class="row" *ngIf="ticketPools">
       <!-- Potential growth -->
       <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
         <div class="card">
@@ -95,21 +95,31 @@
   </div>
 
 
-  <div class="row" style="padding: 0px 45px; overflow-x: hidden;">
+  <div class="row" style="padding: 0px 45px; overflow-x: hidden;" *ngIf="session">
     <div class="col-md-4">
       <div class="card">
         <div class="card-body">
           <h4 class="card-title">Event Details</h4>
-          <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
-            <div>
+          <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3 w-100">
+            <div class="w-100">
               <h6 class="mb-1">Event Details</h6>
-              <p class="text-muted mb-0">{{session.eventName}}</p>
-              <p class="text-muted mb-0">{{session.eventName}}</p>
-              <p class="text-muted mb-0">{{session.eventName}}</p>
-              <p class="text-muted mb-0">{{session.eventName}}</p>
-              <p class="text-muted mb-0">{{session.eventName}}</p>
+              <p class="text-muted mb-0">Event Name: {{ session.eventName }}</p>
+              <p class="text-muted mb-0">Event Venue: {{ session.eventVenue }}</p>
+              <p class="text-muted mb-0">Event Category: {{ session.eventCategory }}</p>
+              <p class="text-muted mb-0">Event Date: {{ session.eventDate | date: 'yyyy-MM-dd' }}</p>
+              <p class="text-muted mb-0">Event Time: {{ session.eventTime }}</p>
+              <p class="text-muted mb-0">Posted Date: {{ session.postedDate | date: 'yyyy-MM-dd' }}</p>
+              <p class="text-muted mb-0">Ticket Price: Rs. {{ session.ticketPrice }}</p>
+              <p 
+                class="mb-0 fw-bolder"
+                [class.text-success]="session.active"
+                [class.text-danger]="!session.active">
+                Current Status: {{ session.active ? "Active" : "Stopped" }}
+              </p>
+
+              <p class="text-muted mb-0 mt-2">Event Description: {{ session.eventDescription }}</p>
             </div>
-          </div>
+          </div>          
           <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row px-4 px-md-3 px-xl-4 rounded mt-3">
             <div>
               <h6 class="mb-1">Pre-Config Details</h6>
@@ -117,14 +127,16 @@
               <p class="text-muted mb-0">Maximum Pool Capacity : {{session.maxTicketCapacity}}</p>
               <p class="text-muted mb-0">Ticket Release Rate : {{session.ticketReleaseRate}}</p>
               <p class="text-muted mb-0">Customer Retrieval Rate : {{session.customerRetrievalRate}}</p>
+              <p class="text-muted mb-0">Event Type : {{session.eventType}}</p>
+              <p class="text-muted mb-0">VIP Discount : {{session.vipDiscount}}%</p>
             </div>
           </div>
         </div>
       </div>
     </div>
   
-    <div class="col-md-7">
-      <p-chart type="line" [data]="ticketPoolData" [options]="ticketPoolOptions"></p-chart>
+    <div class="col-md-8">
+      <p-chart type="line" [data]="ticketPoolData" [options]="ticketPoolOptions" class="h-100 w-100"></p-chart>
     </div>
   </div>
   
