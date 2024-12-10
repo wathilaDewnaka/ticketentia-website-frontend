@@ -19,12 +19,14 @@ export class EventSpecifiedComponent implements OnInit, OnDestroy {
   quantity: number = 1; 
   stock: number = 0;
   totalPrice: number = 0;
+  customerStatus: string = StorageService.getUserRole()
 
   constructor(private route: ActivatedRoute, private customer: CustomerService, private router: Router) {
     if (!StorageService.isCustomerLoggedIn()){
       this.router.navigateByUrl("/")
     }
-
+    
+    this.customerStatus = StorageService.getUserRole()
     this.eventId = this.route.snapshot.paramMap.get('id');
   }
 

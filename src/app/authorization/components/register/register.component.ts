@@ -97,7 +97,7 @@ export class RegisterComponent {
         document.body.style.overflow = ''
         Swal.fire(
           "Error", 
-          err.error,
+          "Something went wrong",
           "error"
         )
       })

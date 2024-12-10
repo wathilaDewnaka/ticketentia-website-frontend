@@ -23,12 +23,22 @@
       <div class="col-md-6">
         <div class="small mb-2 text-muted">{{ event.eventCategory }}</div>
         <h1 class="display-4 fw-bold text-dark mb-3">{{ event.eventName }}</h1>
-        <div class="fs-5 mb-2 text-primary">
-          <span>Total Price: Rs. {{ totalPrice || event.ticketPrice }}</span>
+        <div class="fs-5 mb-2 text-dark">
+          <span *ngIf="customerStatus === 'VIP_CUSTOMER'">
+            <span class="text-muted" style="text-decoration: line-through;">
+              Rs. {{ totalPrice || event.ticketPrice }}
+            </span>
+            <span class="ms-2 text-success">
+              Rs. {{ (totalPrice || event.ticketPrice) * (1 - event.vipDiscount / 100) | number:'1.2-2' }}
+            </span>
+          </span>
+          <span *ngIf="customerStatus !== 'VIP_CUSTOMER'">
+            Rs. {{ totalPrice || event.ticketPrice }}
+          </span>
         </div>
         
         <div class="mb-3 text-muted">
-          <i class="bi bi-alarm"></i> {{ event.eventDate  | date: 'yyyy-MM-dd' }} | {{ event.eventTime | date: 'hh:mm a' }}<br/>
+          <i class="bi bi-alarm"></i> {{ event.eventDate  | date: 'yyyy-MM-dd' }} | {{ event.eventTime  }}<br/>
           <i class="bi bi-geo-alt"></i> {{ event.eventVenue }}<br/>
           <i class="bi bi-bookmarks"></i> {{ event.eventCategory }}<br/>
         </div>

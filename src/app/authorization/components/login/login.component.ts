@@ -66,7 +66,7 @@ export class LoginComponent {
       }, err => {
         Swal.fire(
           'Error',
-          err.error,
+          "Invalid credentials !",
           'error'
         )
       })
